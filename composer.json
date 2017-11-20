@@ -3,8 +3,8 @@
     "description": "专注 Alipay 和 WeChat 的支付扩展包",
     "keywords": ["alipay", "wechat", "pay"],
     "support": {
-        "issues": "https://github.com/yansongda/pay/issues",
-        "source": "https://github.com/yansongda/pay"
+        "issues": "https://github.com/liyantaotop/pay/issues",
+        "source": "https://github.com/liyantaotop/pay"
     },
     "authors": [
         {
