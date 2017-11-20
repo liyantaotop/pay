@@ -101,6 +101,28 @@ abstract class Alipay implements GatewayInterface
     }
 
     /**
+     * query refund a order.
+     *
+     * @author yansongda <me@yansongda.cn>
+     *
+     * @param mixed $config_biz
+     *
+     * @return array|bool
+     */
+    public function refundQuery($config_biz, $refund_amount = null)
+    {
+        if (!is_array($config_biz)) {
+            $config_biz = [
+                'out_trade_no'  => $config_biz,
+                'refund_amount' => $refund_amount,
+                'out_request_no'=>$config_biz
+            ];
+        }
+
+        return $this->getResult($config_biz, 'alipay.trade.fastpay.refund.query');
+    }
+
+    /**
      * close a order.
      *
      * @author yansongda <me@yansongda.cn>
@@ -162,8 +184,8 @@ abstract class Alipay implements GatewayInterface
                 "\n-----END PUBLIC KEY-----";
 
         $toVerify = $sync ? json_encode($data) : $this->getSignContent($data, true);
-
-        return openssl_verify($toVerify, base64_decode($sign), $res, OPENSSL_ALGO_SHA256) === 1 ? $data : false;
+        return $toVerify;
+        //return openssl_verify($toVerify, base64_decode($sign), $res, OPENSSL_ALGO_SHA256) === 1 ? $data : false;
     }
 
     /**
