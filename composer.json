@@ -8,8 +8,10 @@
     },
     "authors": [
         {
-            "name": "yansongda",
-            "email": "me@yansongda.cn"
+            "name": "wcda",
+            "email": "358225063@qq.com",
+            "old_name": "yansongda",
+            "old_email": "me@yansongda.cn"
         }
     ],
     "require": {
