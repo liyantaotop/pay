@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Yansongda\\Pay\\": "src"
+            "wcda\\Pay\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yansongda\\Pay\\Tests\\": "tests"
+            "wcda\\Pay\\Tests\\": "tests"
         }
     },
     "license": "MIT"
