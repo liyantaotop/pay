@@ -37,6 +37,7 @@ class AppGateway extends Wechat
 
         $config_biz['appid'] = $this->user_config->get('open_appid');
         $config_biz['mch_id'] = $this->user_config->get('open_mch_id');
+        $config_biz['notify_url'] = $this->user_config->get('open_notify_url');
 
         $payRequest = [
             'appid'     => $this->user_config->get('open_appid'),

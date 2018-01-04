@@ -167,6 +167,15 @@ abstract class Wechat implements GatewayInterface
         return $this->getSign($data) === $sign ? $data : false;
     }
 
+    public function appverify($data, $sign = null, $sync = false)
+    {
+        $data = $this->fromXml($data);
+
+        $sign = is_null($sign) ? $data['sign'] : $sign;
+
+        return $this->getAppSign($data) === $sign ? $data : false;
+    }
+
     /**
      * get trade type config.
      *
