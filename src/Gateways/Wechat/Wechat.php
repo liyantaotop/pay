@@ -221,7 +221,7 @@ abstract class Wechat implements GatewayInterface
             $error .= isset($data['err_code_des']) ? ' - '.$data['err_code_des'] : '';
         }
 
-        if (!isset($error) && $this->getSign($data) !== $data['sign']) {
+        if (!isset($error) && $this->getAppSign($data) !== $data['sign']) {
             $error = 'getResult error: return data sign error';
         }
 
