@@ -57,15 +57,25 @@ abstract class Wechat implements GatewayInterface
     public function __construct(array $config)
     {
         $this->user_config = new Config($config);
-
-        $this->config = [
-            'appid'      => $this->user_config->get('app_id', ''),
-            'mch_id'     => $this->user_config->get('mch_id', ''),
-            'nonce_str'  => $this->createNonceStr(),
-            'sign_type'  => 'MD5',
-            'notify_url' => $this->user_config->get('notify_url', ''),
-            'trade_type' => $this->getTradeType(),
-        ];
+        if ($this->getTradeType() == 'APP'){
+            $this->config = [
+                'appid'      => $this->user_config->get('open_appid', ''),
+                'mch_id'     => $this->user_config->get('open_mch_id', ''),
+                'nonce_str'  => $this->createNonceStr(),
+                'sign_type'  => 'MD5',
+                'notify_url' => $this->user_config->get('open_notify_url', ''),
+                'trade_type' => $this->getTradeType(),
+            ];
+        }else{
+            $this->config = [
+                'appid'      => $this->user_config->get('app_id', ''),
+                'mch_id'     => $this->user_config->get('mch_id', ''),
+                'nonce_str'  => $this->createNonceStr(),
+                'sign_type'  => 'MD5',
+                'notify_url' => $this->user_config->get('notify_url', ''),
+                'trade_type' => $this->getTradeType(),
+            ];
+        }
     }
 
     /**
@@ -92,8 +102,11 @@ abstract class Wechat implements GatewayInterface
         $this->config['op_user_id'] = isset($this->config['op_user_id']) ?: $this->user_config->get('mch_id', '');
 
         $this->unsetTradeTypeAndNotifyUrl();
-
-        return $this->getResult($this->gateway_refund, true);
+        if ($this->getTradeType() == 'APP'){
+            return $this->getAppResult($this->gateway_refund, true);
+        }else{
+            return $this->getResult($this->gateway_refund, true);
+        }
     }
 
     /**
