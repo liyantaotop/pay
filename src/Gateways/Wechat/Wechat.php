@@ -458,7 +458,9 @@ abstract class Wechat implements GatewayInterface
     protected function unsetRedpackConfig()
     {
         unset($this->config['sign_type']);
-
+        unset($this->config['appid']);
+        unset($this->config['notify_url']);
+        unset($this->config['trade_type']);
         return true;
     }
 }
