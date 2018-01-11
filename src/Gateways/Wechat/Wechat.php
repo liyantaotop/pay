@@ -38,6 +38,11 @@ abstract class Wechat implements GatewayInterface
     protected $gateway_redpack = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack';
 
     /**
+     * @var string
+     */
+    protected $gateway_transfers = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
+
+    /**
      * @var array
      */
     protected $config;
@@ -124,6 +129,24 @@ abstract class Wechat implements GatewayInterface
         $this->unsetRedpackConfig();
 
         return $this->getResult($this->gateway_redpack, true);
+    }
+
+    /**
+     * redpack.
+     *
+     * @author pengcheng
+     *
+     * @return string|bool
+     */
+    public function transfer($config_biz = [])
+    {
+        $config_biz['mch_appid'] = $this->config['appid'];
+        $config_biz['mchid'] = $this->user_config->get('mch_id', '');
+        $this->config = array_merge($this->config, $config_biz);
+
+        $this->unsetTransferConfig();
+
+        return $this->getResult($this->gateway_transfers, true);
     }
 
     /**
@@ -459,6 +482,23 @@ abstract class Wechat implements GatewayInterface
     {
         unset($this->config['sign_type']);
         unset($this->config['appid']);
+        unset($this->config['notify_url']);
+        unset($this->config['trade_type']);
+        return true;
+    }
+
+    /**
+     * delete some config param at transfer.
+     *
+     * @author pengcheng
+     *
+     * @return bool
+     */
+    protected function unsetTransferConfig()
+    {
+        unset($this->config['appid']);
+        unset($this->config['mch_id']);
+        unset($this->config['sign_type']);
         unset($this->config['notify_url']);
         unset($this->config['trade_type']);
         return true;
