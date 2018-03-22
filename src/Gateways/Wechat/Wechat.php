@@ -146,7 +146,7 @@ abstract class Wechat implements GatewayInterface
 
         $this->unsetTransferConfig();
 
-        return $this->getResult($this->gateway_transfers, true);
+        return $this->getResult($this->gateway_transfers, true, false);
     }
 
     /**
@@ -290,7 +290,7 @@ abstract class Wechat implements GatewayInterface
      *
      * @return array
      */
-    protected function getResult($end_point, $cert = false)
+    protected function getResult($end_point, $cert = false, $checkSign = true)
     {
         $this->config['sign'] = $this->getSign($this->config);
 
@@ -312,8 +312,10 @@ abstract class Wechat implements GatewayInterface
             $error .= isset($data['err_code_des']) ? ' - '.$data['err_code_des'] : '';
         }
 
-        if (!isset($error) && $this->getSign($data) !== $data['sign']) {
-            $error = 'getResult error: return data sign error';
+        if ($checkSign){
+            if (!isset($error) && $this->getSign($data) !== $data['sign']) {
+                $error = 'getResult error: return data sign error';
+            }
         }
 
         if (isset($error)) {
